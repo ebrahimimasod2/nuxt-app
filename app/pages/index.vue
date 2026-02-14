@@ -1,16 +1,16 @@
 <template>
   <div>
     <UPageHero
-      title="Nuxt Starter Template"
-      description="A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours."
+      title="Welcome to Your Next Great Project!"
+      description="We're thrilled to have you here! This production-ready starter template is your gateway to building something amazing. Whether you're crafting your first app or your hundredth, we've prepared everything you need to turn your ideas into reality. Let's build something incredible together!"
       :links="[{
-        label: 'Get started',
+        label: 'Start Your Journey',
         to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
         target: '_blank',
         trailingIcon: 'i-lucide-arrow-right',
         size: 'xl'
       }, {
-        label: 'Use this template',
+        label: 'Explore the Code',
         to: 'https://github.com/nuxt-ui-templates/starter',
         target: '_blank',
         icon: 'i-simple-icons-github',
@@ -22,8 +22,8 @@
 
     <UPageSection
       id="features"
-      title="Everything you need to build modern Nuxt apps"
-      description="Start with a solid foundation. This template includes all the essentials for building production-ready applications with Nuxt UI's powerful component system."
+      title="Everything You Need is Right Here"
+      description="We've thoughtfully prepared this foundation so you can focus on what matters most - bringing your vision to life. Every tool, every component, every detail has been chosen to make your development journey smooth and enjoyable."
       :features="[{
         icon: 'i-lucide-rocket',
         title: 'Production-ready from day one',
@@ -53,17 +53,17 @@
 
     <UPageSection>
       <UPageCTA
-        title="Ready to build your next Nuxt app?"
-        description="Join thousands of developers building with Nuxt and Nuxt UI. Get this template and start shipping today."
+        title="Your Adventure Starts Now!"
+        description="Join our community of passionate developers who are already building amazing things. We can't wait to see what you'll create. Take the first step and let's make something extraordinary together!"
         variant="subtle"
         :links="[{
-          label: 'Start building',
+          label: 'Begin Building',
           to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
           target: '_blank',
           trailingIcon: 'i-lucide-arrow-right',
           color: 'neutral'
         }, {
-          label: 'View on GitHub',
+          label: 'Join the Community',
           to: 'https://github.com/nuxt-ui-templates/starter',
           target: '_blank',
           icon: 'i-simple-icons-github',
