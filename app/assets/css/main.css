@@ -43,24 +43,40 @@
   --color-amber-950: #451A03;
 }
 
-:root {
-  --shanbe-navy: #0F172A;
-  --shanbe-gold: #D97706;
-  --shanbe-gold-light: #F59E0B;
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #475569 #1e293b;
 }
 
-body {
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+html, body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, var(--shanbe-navy) 0%, #1E293B 100%);
+  background: #020617;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
-.shanbe-gradient {
-  background: linear-gradient(135deg, var(--shanbe-navy) 0%, #1E293B 100%);
-}
-
-.shanbe-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

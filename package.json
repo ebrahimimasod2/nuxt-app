@@ -8,12 +8,19 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "ingest": "node scripts/ingest-wordpress.js"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@iconify-json/lucide": "^1.2.89",
     "@iconify-json/simple-icons": "^1.2.70",
     "@nuxt/ui": "^4.4.0",
+    "@supabase/supabase-js": "^2.95.3",
+    "cheerio": "^1.0.0",
+    "dotenv": "^17.3.1",
+    "html-to-text": "^9.0.5",
+    "node-fetch": "^3.3.2",
     "nuxt": "^4.3.1",
     "tailwindcss": "^4.1.18"
   },
