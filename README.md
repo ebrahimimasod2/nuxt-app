@@ -9,7 +9,7 @@ Use this template to get started with [Nuxt UI](https://ui.nuxt.com) quickly.
 
 - [Live demo](https://starter-template.nuxt.dev/)
 - [Documentation](https://ui.nuxt.com/docs/getting-started/installation/nuxt)
-
+         
 <a href="https://starter-template.nuxt.dev/" target="_blank">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-dark.png">
