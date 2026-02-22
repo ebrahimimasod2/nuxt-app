@@ -2,19 +2,32 @@
   <div class="min-h-screen p-6 lg:p-10">
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-4xl font-bold text-white mb-2">Select an Intelligence Agent</h1>
-      <p class="text-slate-400 text-lg">Choose a specialized AI agent to assist with your research and analysis</p>
+      <h1 class="text-4xl font-bold text-navy-900 mb-2">Agent Store</h1>
+      <p class="text-gray-600 text-lg">Choose a specialized AI agent to assist with your research and analysis</p>
     </div>
 
-    <!-- Featured Agent Banner -->
-    <div class="bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-2xl p-8 mb-8">
-      <div class="flex items-center space-x-4 mb-4">
-        <div class="w-16 h-16 bg-amber-500 rounded-xl flex items-center justify-center">
+    <!-- Search Bar -->
+    <div class="mb-8 max-w-2xl">
+      <div class="relative">
+        <Icon name="i-lucide-search" class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Find an expert..."
+          class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-navy-900 placeholder-gray-400"
+        />
+      </div>
+    </div>
+
+    <!-- Featured Banner -->
+    <div class="bg-gradient-to-r from-amber-50 to-amber-100 border border-amber-200 rounded-2xl p-8 mb-8 shadow-lg">
+      <div class="flex items-center space-x-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
           <Icon name="i-lucide-sparkles" class="w-8 h-8 text-white" />
         </div>
         <div>
-          <h2 class="text-2xl font-bold text-white">New: Multi-Agent Collaboration</h2>
-          <p class="text-amber-400">Connect multiple agents for comprehensive analysis</p>
+          <h2 class="text-2xl font-bold text-navy-900">Premium AI Agents</h2>
+          <p class="text-gray-700">Powered by advanced intelligence for the Iranian startup ecosystem</p>
         </div>
       </div>
     </div>
@@ -22,133 +35,126 @@
     <!-- Agents Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div
-        v-for="agent in agents"
+        v-for="agent in filteredAgents"
         :key="agent.id"
-        class="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden hover:border-amber-500/50 transition-all duration-300 group"
+        class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer border border-gray-100 hover:-translate-y-1"
       >
         <!-- Agent Header -->
-        <div class="p-6 border-b border-slate-800">
+        <div class="p-6 border-b border-gray-100">
           <div class="flex items-start justify-between mb-4">
             <div :class="[
-              'w-14 h-14 rounded-xl flex items-center justify-center',
+              'w-16 h-16 rounded-xl flex items-center justify-center shadow-lg',
               agent.color
             ]">
-              <Icon :name="agent.icon" class="w-7 h-7 text-white" />
+              <Icon :name="agent.icon" class="w-8 h-8 text-white" />
             </div>
             <span
               :class="[
-                'px-3 py-1 rounded-full text-xs font-medium',
-                agent.status === 'online' ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-slate-500/10 text-slate-400 border border-slate-500/20'
+                'px-3 py-1 rounded-full text-xs font-bold',
+                agent.badge.color
               ]"
             >
-              {{ agent.status === 'online' ? '● Online' : '○ Offline' }}
+              {{ agent.badge.text }}
             </span>
           </div>
 
-          <h3 class="text-xl font-bold text-white mb-2">{{ agent.name }}</h3>
-          <p class="text-slate-400 text-sm mb-4">{{ agent.description }}</p>
+          <h3 class="text-2xl font-bold text-navy-900 mb-2 group-hover:text-amber-600 transition-colors">
+            {{ agent.name }}
+          </h3>
+          <p class="text-gray-600 text-sm mb-4">{{ agent.description }}</p>
 
           <!-- Stats -->
           <div class="flex items-center space-x-4 text-sm">
-            <div class="flex items-center space-x-1 text-slate-500">
+            <div class="flex items-center space-x-1 text-gray-500">
               <Icon name="i-lucide-users" class="w-4 h-4" />
-              <span>{{ agent.users }}</span>
+              <span class="font-medium">{{ agent.users }}</span>
             </div>
-            <div class="flex items-center space-x-1 text-slate-500">
-              <Icon name="i-lucide-star" class="w-4 h-4 text-amber-400" />
-              <span class="text-amber-400">{{ agent.rating }}</span>
+            <div class="flex items-center space-x-1">
+              <Icon name="i-lucide-star" class="w-4 h-4 text-amber-500" />
+              <span class="text-amber-600 font-bold">{{ agent.rating }}</span>
+            </div>
+            <div class="flex items-center space-x-1">
+              <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span class="text-green-600 font-medium text-xs">Online</span>
             </div>
           </div>
         </div>
 
         <!-- Agent Capabilities -->
-        <div class="p-6 border-b border-slate-800">
-          <h4 class="text-sm font-semibold text-slate-300 mb-3">Specializations</h4>
+        <div class="p-6 border-b border-gray-100 bg-gray-50">
+          <h4 class="text-sm font-bold text-navy-900 mb-3">Specializations</h4>
           <div class="flex flex-wrap gap-2">
             <span
               v-for="skill in agent.skills"
               :key="skill"
-              class="px-2 py-1 bg-slate-800 text-slate-300 rounded text-xs"
+              class="px-3 py-1 bg-white text-gray-700 rounded-lg text-xs font-medium border border-gray-200"
             >
               {{ skill }}
             </span>
           </div>
         </div>
 
-        <!-- Action Buttons -->
+        <!-- Action Button -->
         <div class="p-6">
-          <div class="flex space-x-3">
-            <UButton
-              color="amber"
-              class="flex-1"
-              size="lg"
-              @click="connectAgent(agent)"
-            >
-              <Icon name="i-lucide-message-circle" class="w-4 h-4 mr-2" />
-              Chat Now
-            </UButton>
-            <UButton
-              color="neutral"
-              variant="outline"
-              size="lg"
-              @click="viewDetails(agent)"
-            >
-              <Icon name="i-lucide-info" class="w-4 h-4" />
-            </UButton>
-          </div>
+          <button
+            @click="connectAgent(agent)"
+            class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
+          >
+            <Icon name="i-lucide-message-circle" class="w-5 h-5" />
+            <span>Try Agent</span>
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Chat Modal -->
-    <UModal v-model="chatModalOpen">
+    <UModal v-model="chatModalOpen" :ui="{ width: 'max-w-3xl' }">
       <div class="p-6">
-        <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
           <div class="flex items-center space-x-3">
             <div :class="[
-              'w-12 h-12 rounded-xl flex items-center justify-center',
+              'w-14 h-14 rounded-xl flex items-center justify-center shadow-lg',
               selectedAgent?.color
             ]">
-              <Icon :name="selectedAgent?.icon" class="w-6 h-6 text-white" />
+              <Icon :name="selectedAgent?.icon" class="w-7 h-7 text-white" />
             </div>
             <div>
-              <h3 class="text-xl font-bold text-white">{{ selectedAgent?.name }}</h3>
-              <p class="text-sm text-slate-400">{{ selectedAgent?.status === 'online' ? 'Online' : 'Offline' }}</p>
+              <h3 class="text-2xl font-bold text-navy-900">{{ selectedAgent?.name }}</h3>
+              <p class="text-sm text-gray-600">{{ selectedAgent?.badge.text }} Specialist</p>
             </div>
           </div>
-          <UButton
-            color="neutral"
-            variant="ghost"
-            icon="i-lucide-x"
+          <button
             @click="chatModalOpen = false"
-          />
+            class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            <Icon name="i-lucide-x" class="w-6 h-6 text-gray-500" />
+          </button>
         </div>
 
         <!-- Chat Interface -->
-        <div class="bg-slate-900 rounded-xl p-4 h-96 overflow-y-auto mb-4">
+        <div class="bg-gray-50 rounded-xl p-4 h-96 overflow-y-auto mb-4 border border-gray-200">
           <div class="space-y-4">
             <div class="flex justify-start">
-              <div class="bg-slate-800 rounded-lg px-4 py-2 max-w-xs">
-                <p class="text-sm text-white">Hello! I'm {{ selectedAgent?.name }}. How can I assist you today?</p>
+              <div class="bg-white rounded-xl px-4 py-3 max-w-xs shadow-md border border-gray-200">
+                <p class="text-sm text-navy-900 font-medium">Hello! I'm {{ selectedAgent?.name }}. How can I assist you today?</p>
               </div>
             </div>
           </div>
         </div>
 
         <div class="flex space-x-3">
-          <UInput
+          <input
             v-model="chatMessage"
             placeholder="Type your message..."
-            class="flex-1"
-            size="lg"
+            class="flex-1 px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
             @keyup.enter="sendMessage"
           />
-          <UButton
-            color="amber"
-            size="lg"
-            icon="i-lucide-send"
+          <button
             @click="sendMessage"
-          />
+            class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg"
+          >
+            <Icon name="i-lucide-send" class="w-5 h-5" />
+          </button>
         </div>
       </div>
     </UModal>
@@ -163,84 +169,92 @@ definePageMeta({
 const chatModalOpen = ref(false)
 const selectedAgent = ref(null)
 const chatMessage = ref('')
+const searchQuery = ref('')
 
 const agents = ref([
   {
     id: 1,
-    name: 'The Generalist',
-    description: 'Shanbe\'s main ecosystem guide with comprehensive knowledge of Iran\'s startup landscape.',
-    icon: 'i-lucide-brain',
-    color: 'bg-gradient-to-br from-purple-500 to-purple-600',
-    status: 'online',
-    users: '2.4K',
+    name: 'Investment Scout',
+    description: 'Finds and analyzes investment opportunities across all sectors in Iran.',
+    icon: 'i-lucide-trending-up',
+    color: 'bg-gradient-to-br from-green-500 to-green-600',
+    badge: { text: 'Finance', color: 'bg-green-100 text-green-700' },
+    users: '3.2K',
     rating: '4.9',
-    skills: ['Market Analysis', 'Startup Discovery', 'Trend Forecasting', 'General Insights']
+    skills: ['Deal Sourcing', 'Due Diligence', 'Valuation', 'Portfolio Analysis']
   },
   {
     id: 2,
-    name: 'The Legal Bot',
+    name: 'Legal Advisor',
     description: 'Specialist in Iranian startup law, regulations, and compliance requirements.',
     icon: 'i-lucide-scale',
     color: 'bg-gradient-to-br from-blue-500 to-blue-600',
-    status: 'online',
+    badge: { text: 'Legal', color: 'bg-blue-100 text-blue-700' },
     users: '1.8K',
     rating: '4.8',
     skills: ['Legal Compliance', 'Regulations', 'Contract Review', 'IP Rights']
   },
   {
     id: 3,
-    name: 'The VC Scout',
-    description: 'Finds and analyzes investment opportunities across all sectors in Iran.',
-    icon: 'i-lucide-trending-up',
-    color: 'bg-gradient-to-br from-green-500 to-green-600',
-    status: 'online',
-    users: '3.2K',
+    name: 'Market Analyst',
+    description: 'Comprehensive knowledge of Iran\'s startup landscape and market trends.',
+    icon: 'i-lucide-brain',
+    color: 'bg-gradient-to-br from-purple-500 to-purple-600',
+    badge: { text: 'Research', color: 'bg-purple-100 text-purple-700' },
+    users: '2.4K',
     rating: '4.9',
-    skills: ['Deal Sourcing', 'Due Diligence', 'Valuation', 'Portfolio Analysis']
+    skills: ['Market Analysis', 'Startup Discovery', 'Trend Forecasting', 'Insights']
   },
   {
     id: 4,
-    name: 'The Sector Analyst',
+    name: 'Sector Expert',
     description: 'Deep expertise in specific industry verticals and sector-specific insights.',
     icon: 'i-lucide-pie-chart',
     color: 'bg-gradient-to-br from-amber-500 to-amber-600',
-    status: 'online',
+    badge: { text: 'Industry', color: 'bg-amber-100 text-amber-700' },
     users: '1.5K',
     rating: '4.7',
-    skills: ['Sector Reports', 'Competitive Analysis', 'Market Sizing', 'Industry Trends']
+    skills: ['Sector Reports', 'Competitive Analysis', 'Market Sizing', 'Trends']
   },
   {
     id: 5,
-    name: 'The Data Scientist',
+    name: 'Data Scientist',
     description: 'Advanced analytics and data-driven insights for strategic decision making.',
     icon: 'i-lucide-bar-chart',
     color: 'bg-gradient-to-br from-cyan-500 to-cyan-600',
-    status: 'online',
+    badge: { text: 'Analytics', color: 'bg-cyan-100 text-cyan-700' },
     users: '980',
     rating: '4.8',
-    skills: ['Predictive Analytics', 'Data Visualization', 'Statistical Analysis', 'ML Models']
+    skills: ['Predictive Analytics', 'Data Visualization', 'Statistics', 'ML Models']
   },
   {
     id: 6,
-    name: 'The Network Mapper',
+    name: 'Network Connector',
     description: 'Identifies connections, relationships, and networks within the ecosystem.',
     icon: 'i-lucide-network',
     color: 'bg-gradient-to-br from-pink-500 to-pink-600',
-    status: 'online',
+    badge: { text: 'Networking', color: 'bg-pink-100 text-pink-700' },
     users: '1.2K',
     rating: '4.6',
-    skills: ['Network Analysis', 'Relationship Mapping', 'Influence Tracking', 'Collaboration']
+    skills: ['Network Analysis', 'Relationship Mapping', 'Influence', 'Collaboration']
   }
 ])
+
+const filteredAgents = computed(() => {
+  if (!searchQuery.value) return agents.value
+  
+  const query = searchQuery.value.toLowerCase()
+  return agents.value.filter(agent => 
+    agent.name.toLowerCase().includes(query) ||
+    agent.description.toLowerCase().includes(query) ||
+    agent.badge.text.toLowerCase().includes(query) ||
+    agent.skills.some(skill => skill.toLowerCase().includes(query))
+  )
+})
 
 const connectAgent = (agent) => {
   selectedAgent.value = agent
   chatModalOpen.value = true
-}
-
-const viewDetails = (agent) => {
-  // Navigate to agent details page or show more info
-  console.log('View details for:', agent.name)
 }
 
 const sendMessage = () => {

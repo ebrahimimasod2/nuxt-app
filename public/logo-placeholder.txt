@@ -1,0 +1,13 @@
+Place your logo.png file in the /public directory.
+
+Recommended specifications:
+- Format: PNG with transparent background
+- Dimensions: 512x512px or similar square/rectangular format
+- File name: logo.png
+- Style: Professional, clean design that represents Shanbe Global
+
+The logo will be displayed at w-32 (128px width) in the sidebar.
+
+If no logo.png is found, the system will automatically display a fallback with:
+- Gold gradient square with "S" letter
+- "Shanbe Global" text below

@@ -1,23 +1,11 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @theme static {
   --font-sans: 'Inter', sans-serif;
 
-  --color-green-50: #EFFDF5;
-  --color-green-100: #D9FBE8;
-  --color-green-200: #B3F5D1;
-  --color-green-300: #75EDAE;
-  --color-green-400: #00DC82;
-  --color-green-500: #00C16A;
-  --color-green-600: #00A155;
-  --color-green-700: #007F45;
-  --color-green-800: #016538;
-  --color-green-900: #0A5331;
-  --color-green-950: #052E16;
-
-  /* Shanbe Brand Colors */
+  /* Shanbe Brand Colors - Navy/Midnight Blue */
   --color-navy-50: #F8FAFC;
   --color-navy-100: #F1F5F9;
   --color-navy-200: #E2E8F0;
@@ -27,9 +15,10 @@
   --color-navy-600: #475569;
   --color-navy-700: #334155;
   --color-navy-800: #1E293B;
-  --color-navy-900: #0F172A;
+  --color-navy-900: #0B1120;
   --color-navy-950: #020617;
 
+  /* Gold/Amber Accents */
   --color-amber-50: #FFFBEB;
   --color-amber-100: #FEF3C7;
   --color-amber-200: #FDE68A;
@@ -41,11 +30,24 @@
   --color-amber-800: #92400E;
   --color-amber-900: #78350F;
   --color-amber-950: #451A03;
+
+  /* Additional Colors */
+  --color-green-50: #EFFDF5;
+  --color-green-100: #D9FBE8;
+  --color-green-200: #B3F5D1;
+  --color-green-300: #75EDAE;
+  --color-green-400: #00DC82;
+  --color-green-500: #00C16A;
+  --color-green-600: #00A155;
+  --color-green-700: #007F45;
+  --color-green-800: #016538;
+  --color-green-900: #0A5331;
+  --color-green-950: #052E16;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #475569 #1e293b;
+  scrollbar-color: #CBD5E1 #F1F5F9;
 }
 
 *::-webkit-scrollbar {
@@ -54,24 +56,25 @@
 }
 
 *::-webkit-scrollbar-track {
-  background: #1e293b;
+  background: #F1F5F9;
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #475569;
+  background: #CBD5E1;
   border-radius: 4px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
+  background: #94A3B8;
 }
 
 html, body {
   font-family: 'Inter', sans-serif;
-  background: #020617;
+  background: #F8FAFC;
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  color: #0B1120;
 }
 
 .line-clamp-3 {
@@ -79,4 +82,31 @@ html, body {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Focus styles */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #D97706;
+}
+
+/* Button hover effects */
+button {
+  cursor: pointer;
+  user-select: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }

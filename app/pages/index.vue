@@ -2,44 +2,44 @@
   <div class="min-h-screen p-6 lg:p-10">
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-4xl font-bold text-white mb-2">Live Ecosystem Updates</h1>
-      <p class="text-slate-400 text-lg">Real-time news and insights from Iran's startup ecosystem</p>
+      <h1 class="text-4xl font-bold text-navy-900 mb-2">Market Pulse</h1>
+      <p class="text-gray-600 text-lg">Real-time news and insights from Iran's startup ecosystem</p>
     </div>
 
     <!-- Stats Bar -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-      <div class="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-slate-400 text-sm mb-1">Total Articles</p>
-            <p class="text-3xl font-bold text-white">{{ newsArticles.length }}</p>
+            <p class="text-gray-500 text-sm mb-1 font-medium">Total Articles</p>
+            <p class="text-4xl font-bold text-navy-900">{{ newsArticles.length }}</p>
           </div>
-          <div class="w-12 h-12 bg-amber-500/10 rounded-lg flex items-center justify-center">
-            <Icon name="i-lucide-file-text" class="w-6 h-6 text-amber-400" />
+          <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+            <Icon name="i-lucide-file-text" class="w-7 h-7 text-white" />
           </div>
         </div>
       </div>
 
-      <div class="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+      <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-slate-400 text-sm mb-1">Last Updated</p>
-            <p class="text-xl font-semibold text-white">2 hours ago</p>
+            <p class="text-gray-500 text-sm mb-1 font-medium">Last Updated</p>
+            <p class="text-2xl font-bold text-navy-900">2 hours ago</p>
           </div>
-          <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center">
-            <Icon name="i-lucide-clock" class="w-6 h-6 text-green-400" />
+          <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+            <Icon name="i-lucide-clock" class="w-7 h-7 text-white" />
           </div>
         </div>
       </div>
 
-      <div class="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+      <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-slate-400 text-sm mb-1">Active Sources</p>
-            <p class="text-3xl font-bold text-white">12</p>
+            <p class="text-gray-500 text-sm mb-1 font-medium">Active Sources</p>
+            <p class="text-4xl font-bold text-navy-900">12</p>
           </div>
-          <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center">
-            <Icon name="i-lucide-rss" class="w-6 h-6 text-blue-400" />
+          <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
+            <Icon name="i-lucide-rss" class="w-7 h-7 text-white" />
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
       <article
         v-for="article in newsArticles"
         :key="article.id"
-        class="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden hover:border-amber-500/50 transition-all duration-300 group cursor-pointer"
+        class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer border border-gray-100 hover:-translate-y-1"
       >
         <div class="p-6">
           <!-- Tags -->
@@ -59,29 +59,29 @@
               v-for="tag in article.tags"
               :key="tag"
               :class="getTagColor(tag)"
-              class="px-3 py-1 rounded-full text-xs font-medium"
+              class="px-3 py-1 rounded-full text-xs font-semibold"
             >
               {{ tag }}
             </span>
           </div>
 
           <!-- Title -->
-          <h3 class="text-xl font-bold text-white mb-3 group-hover:text-amber-400 transition-colors">
+          <h3 class="text-xl font-bold text-navy-900 mb-3 group-hover:text-amber-600 transition-colors">
             {{ article.title }}
           </h3>
 
           <!-- Excerpt -->
-          <p class="text-slate-400 mb-4 line-clamp-3">
+          <p class="text-gray-600 mb-4 line-clamp-3">
             {{ article.excerpt }}
           </p>
 
           <!-- Meta -->
           <div class="flex items-center justify-between text-sm">
-            <div class="flex items-center space-x-2 text-slate-500">
+            <div class="flex items-center space-x-2 text-gray-500">
               <Icon name="i-lucide-calendar" class="w-4 h-4" />
               <span>{{ article.date }}</span>
             </div>
-            <div class="flex items-center space-x-2 text-slate-500">
+            <div class="flex items-center space-x-2 text-gray-500">
               <Icon name="i-lucide-eye" class="w-4 h-4" />
               <span>{{ article.views }}</span>
             </div>
@@ -89,10 +89,10 @@
         </div>
 
         <!-- Read More Footer -->
-        <div class="px-6 py-3 bg-slate-800/50 border-t border-slate-800 group-hover:bg-amber-500/10 transition-colors">
+        <div class="px-6 py-3 bg-gray-50 border-t border-gray-100 group-hover:bg-amber-50 transition-colors">
           <div class="flex items-center justify-between">
-            <span class="text-sm text-slate-400 group-hover:text-amber-400">Read full article</span>
-            <Icon name="i-lucide-arrow-right" class="w-4 h-4 text-slate-400 group-hover:text-amber-400 group-hover:translate-x-1 transition-transform" />
+            <span class="text-sm text-gray-600 group-hover:text-amber-600 font-medium">Read full article</span>
+            <Icon name="i-lucide-arrow-right" class="w-4 h-4 text-gray-400 group-hover:text-amber-600 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
       </article>
@@ -158,23 +158,23 @@ const newsArticles = ref([
 
 const getTagColor = (tag) => {
   const colors = {
-    'Investment': 'bg-green-500/10 text-green-400 border border-green-500/20',
-    'Regulation': 'bg-blue-500/10 text-blue-400 border border-blue-500/20',
-    'Tech': 'bg-purple-500/10 text-purple-400 border border-purple-500/20',
-    'Fintech': 'bg-amber-500/10 text-amber-400 border border-amber-500/20',
-    'Healthcare': 'bg-red-500/10 text-red-400 border border-red-500/20',
-    'E-commerce': 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20',
-    'AI': 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20',
-    'Policy': 'bg-slate-500/10 text-slate-400 border border-slate-500/20',
-    'Funding': 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
-    'CleanTech': 'bg-lime-500/10 text-lime-400 border border-lime-500/20',
-    'Accelerator': 'bg-orange-500/10 text-orange-400 border border-orange-500/20',
-    'Sustainability': 'bg-teal-500/10 text-teal-400 border border-teal-500/20',
-    'Expansion': 'bg-pink-500/10 text-pink-400 border border-pink-500/20',
-    'International': 'bg-violet-500/10 text-violet-400 border border-violet-500/20',
-    'IPO': 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20',
-    'Milestone': 'bg-fuchsia-500/10 text-fuchsia-400 border border-fuchsia-500/20'
+    'Investment': 'bg-green-100 text-green-700',
+    'Regulation': 'bg-blue-100 text-blue-700',
+    'Tech': 'bg-purple-100 text-purple-700',
+    'Fintech': 'bg-amber-100 text-amber-700',
+    'Healthcare': 'bg-red-100 text-red-700',
+    'E-commerce': 'bg-indigo-100 text-indigo-700',
+    'AI': 'bg-cyan-100 text-cyan-700',
+    'Policy': 'bg-gray-100 text-gray-700',
+    'Funding': 'bg-emerald-100 text-emerald-700',
+    'CleanTech': 'bg-lime-100 text-lime-700',
+    'Accelerator': 'bg-orange-100 text-orange-700',
+    'Sustainability': 'bg-teal-100 text-teal-700',
+    'Expansion': 'bg-pink-100 text-pink-700',
+    'International': 'bg-violet-100 text-violet-700',
+    'IPO': 'bg-yellow-100 text-yellow-700',
+    'Milestone': 'bg-fuchsia-100 text-fuchsia-700'
   }
-  return colors[tag] || 'bg-slate-500/10 text-slate-400 border border-slate-500/20'
+  return colors[tag] || 'bg-gray-100 text-gray-700'
 }
 </script>

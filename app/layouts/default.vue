@@ -1,9 +1,9 @@
 <template>
-  <div class="flex h-screen bg-slate-950 overflow-hidden">
+  <div class="flex h-screen bg-gray-50 overflow-hidden">
     <!-- Mobile Menu Button -->
     <button
       @click="sidebarOpen = !sidebarOpen"
-      class="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-800 rounded-lg text-white"
+      class="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg text-navy-900"
     >
       <Icon :name="sidebarOpen ? 'i-lucide-x' : 'i-lucide-menu'" class="w-6 h-6" />
     </button>
@@ -11,27 +11,27 @@
     <!-- Sidebar -->
     <aside
       :class="[
-        'fixed lg:static inset-y-0 left-0 z-40 w-64 bg-slate-900 border-r border-slate-800 transform transition-transform duration-300 ease-in-out flex flex-col',
+        'fixed lg:static inset-y-0 left-0 z-40 w-72 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out flex flex-col shadow-xl',
         sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
       ]"
     >
       <!-- Logo -->
-      <div class="p-6 border-b border-slate-800">
-        <NuxtLink to="/" class="flex items-center space-x-3">
-          <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold text-xl">S</span>
-          </div>
-          <div>
-            <h1 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">
-              Shanbe Global
-            </h1>
-            <p class="text-xs text-slate-400">Intelligence Portal</p>
-          </div>
+      <div class="p-6 border-b border-gray-200">
+        <NuxtLink to="/" class="flex items-center justify-center">
+          <img 
+            src="/logo.png" 
+            alt="Shanbe Global" 
+            class="w-32 h-auto"
+            @error="handleImageError"
+          />
         </NuxtLink>
+        <p class="text-center text-xs text-gray-500 mt-3 font-medium">
+          AI Agent Marketplace for Iranian Startups
+        </p>
       </div>
 
       <!-- Navigation -->
-      <nav class="flex-1 p-4 space-y-2">
+      <nav class="flex-1 p-4 space-y-1">
         <NuxtLink
           v-for="item in menuItems"
           :key="item.path"
@@ -39,24 +39,21 @@
           @click="sidebarOpen = false"
           class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 group"
           :class="isActive(item.path) 
-            ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' 
-            : 'text-slate-300 hover:bg-slate-800 hover:text-white'"
+            ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md' 
+            : 'text-gray-700 hover:bg-gray-100 hover:text-navy-900'"
         >
           <Icon :name="item.icon" class="w-5 h-5" />
-          <span class="font-medium">{{ item.label }}</span>
+          <span class="font-semibold">{{ item.label }}</span>
         </NuxtLink>
       </nav>
 
-      <!-- Settings at Bottom -->
-      <div class="p-4 border-t border-slate-800">
-        <NuxtLink
-          to="/settings"
-          @click="sidebarOpen = false"
-          class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-slate-300 hover:bg-slate-800 hover:text-white"
-        >
-          <Icon name="i-lucide-settings" class="w-5 h-5" />
-          <span class="font-medium">Settings</span>
-        </NuxtLink>
+      <!-- Footer Info -->
+      <div class="p-4 border-t border-gray-200 bg-gray-50">
+        <div class="text-center">
+          <p class="text-xs text-gray-500 mb-2">Trusted by</p>
+          <p class="text-2xl font-bold text-navy-900">500+</p>
+          <p class="text-xs text-gray-600">Startups & Investors</p>
+        </div>
       </div>
     </aside>
 
@@ -68,7 +65,7 @@
     ></div>
 
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto bg-slate-950">
+    <main class="flex-1 overflow-y-auto bg-gray-50">
       <slot />
     </main>
   </div>
@@ -80,14 +77,24 @@ const sidebarOpen = ref(false)
 
 const menuItems = [
   {
-    label: 'News Pulse',
-    icon: 'i-lucide-newspaper',
+    label: 'Market Pulse',
+    icon: 'i-lucide-bar-chart-3',
     path: '/'
   },
   {
-    label: 'Agent Marketplace',
+    label: 'Agent Store',
     icon: 'i-lucide-bot',
     path: '/agents'
+  },
+  {
+    label: 'About Shanbe',
+    icon: 'i-lucide-building-2',
+    path: '/about'
+  },
+  {
+    label: 'Contact Bridge',
+    icon: 'i-lucide-phone',
+    path: '/contact'
   }
 ]
 
@@ -96,6 +103,19 @@ const isActive = (path) => {
     return route.path === '/'
   }
   return route.path.startsWith(path)
+}
+
+const handleImageError = (e) => {
+  // Fallback if logo.png doesn't exist
+  e.target.style.display = 'none'
+  e.target.parentElement.innerHTML = `
+    <div class="text-center">
+      <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-2">
+        <span class="text-white font-bold text-3xl">S</span>
+      </div>
+      <h1 class="text-xl font-bold text-navy-900">Shanbe Global</h1>
+    </div>
+  `
 }
 
 // Close sidebar on route change (mobile)
