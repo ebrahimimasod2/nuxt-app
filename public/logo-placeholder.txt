@@ -1,13 +1,31 @@
-Place your logo.png file in the /public directory.
+OPTIONAL: Add Your Custom Logo
 
-Recommended specifications:
+If you want to replace the default "S" badge with your own logo:
+
+1. Create your logo file (PNG format recommended)
+2. Save it as logo.png in the /public directory
+3. Update app/layouts/default.vue to use the image:
+
+Replace the logo section with:
+```vue
+<div class="p-6 border-b border-gray-200">
+  <NuxtLink to="/" class="flex items-center justify-center">
+    <img 
+      src="/logo.png" 
+      alt="Shanbe Global" 
+      class="w-32 h-auto"
+    />
+  </NuxtLink>
+  <p class="text-center text-xs text-gray-500 mt-3 font-medium">
+    AI Agent Marketplace for Iranian Startups
+  </p>
+</div>
+```
+
+Recommended logo specifications:
 - Format: PNG with transparent background
 - Dimensions: 512x512px or similar square/rectangular format
-- File name: logo.png
 - Style: Professional, clean design that represents Shanbe Global
+- The logo will be displayed at w-32 (128px width) in the sidebar
 
-The logo will be displayed at w-32 (128px width) in the sidebar.
-
-If no logo.png is found, the system will automatically display a fallback with:
-- Gold gradient square with "S" letter
-- "Shanbe Global" text below
+Current default: Gold gradient square with "S" letter and "Shanbe Global" text

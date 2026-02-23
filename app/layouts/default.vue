@@ -17,17 +17,17 @@
     >
       <!-- Logo -->
       <div class="p-6 border-b border-gray-200">
-        <NuxtLink to="/" class="flex items-center justify-center">
-          <img 
-            src="/logo.png" 
-            alt="Shanbe Global" 
-            class="w-32 h-auto"
-            @error="handleImageError"
-          />
+        <NuxtLink to="/" class="block">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+              <span class="text-white font-bold text-3xl">S</span>
+            </div>
+            <h1 class="text-xl font-bold text-navy-900">Shanbe Global</h1>
+            <p class="text-xs text-gray-500 mt-2 font-medium">
+              AI Agent Marketplace for Iranian Startups
+            </p>
+          </div>
         </NuxtLink>
-        <p class="text-center text-xs text-gray-500 mt-3 font-medium">
-          AI Agent Marketplace for Iranian Startups
-        </p>
       </div>
 
       <!-- Navigation -->
@@ -103,19 +103,6 @@ const isActive = (path) => {
     return route.path === '/'
   }
   return route.path.startsWith(path)
-}
-
-const handleImageError = (e) => {
-  // Fallback if logo.png doesn't exist
-  e.target.style.display = 'none'
-  e.target.parentElement.innerHTML = `
-    <div class="text-center">
-      <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-2">
-        <span class="text-white font-bold text-3xl">S</span>
-      </div>
-      <h1 class="text-xl font-bold text-navy-900">Shanbe Global</h1>
-    </div>
-  `
 }
 
 // Close sidebar on route change (mobile)
