@@ -343,8 +343,9 @@ const sendMessage = async () => {
     const response = await fetch(`${API_BASE_URL}/v1/chat`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_TOKEN}`
+        'accept': 'application/json',
+        'x-api-key': API_TOKEN,
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         question: userMessage
