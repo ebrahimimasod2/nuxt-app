@@ -112,15 +112,15 @@
       <div class="p-6">
         <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
           <div class="flex items-center space-x-3">
-            <div :class="[
+            <div v-if="selectedAgent" :class="[
               'w-14 h-14 rounded-xl flex items-center justify-center shadow-lg',
-              selectedAgent?.color
+              selectedAgent.color
             ]">
-              <Icon :name="selectedAgent?.icon" class="w-7 h-7 text-white" />
+              <Icon :name="selectedAgent.icon" class="w-7 h-7 text-white" />
             </div>
             <div>
               <h3 class="text-2xl font-bold text-navy-900">{{ selectedAgent?.name }}</h3>
-              <p class="text-sm text-gray-600">{{ selectedAgent?.badge.text }} Specialist</p>
+              <p class="text-sm text-gray-600">{{ selectedAgent?.badge?.text }} Specialist</p>
             </div>
           </div>
           <button
