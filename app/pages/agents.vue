@@ -108,100 +108,108 @@
     </div>
 
     <!-- Chat Modal -->
-    <UModal v-model="chatModalOpen" :ui="{ width: 'max-w-3xl' }">
-      <div class="p-6">
-        <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
-          <div class="flex items-center space-x-3">
-            <div v-if="selectedAgent" :class="[
-              'w-14 h-14 rounded-xl flex items-center justify-center shadow-lg',
-              selectedAgent.color
-            ]">
-              <Icon :name="selectedAgent.icon" class="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h3 class="text-2xl font-bold text-navy-900">{{ selectedAgent?.name }}</h3>
-              <p class="text-sm text-gray-600">{{ selectedAgent?.badge?.text }} Specialist</p>
-            </div>
-          </div>
-          <button
-            @click="chatModalOpen = false"
-            class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <Icon name="i-lucide-x" class="w-6 h-6 text-gray-500" />
-          </button>
-        </div>
-
-        <!-- Chat Interface -->
-        <div ref="chatContainer" class="bg-gray-50 rounded-xl p-4 h-96 overflow-y-auto mb-4 border border-gray-200">
-          <div class="space-y-4">
-            <div class="flex justify-start">
-              <div class="bg-white rounded-xl px-4 py-3 max-w-xs shadow-md border border-gray-200">
-                <p class="text-sm text-navy-900 font-medium">Hello! I'm {{ selectedAgent?.name }}. How can I assist you today?</p>
-              </div>
-            </div>
-            
-            <!-- Chat Messages -->
-            <template v-for="(msg, index) in chatMessages" :key="index">
-              <!-- User Message -->
-              <div v-if="msg.type === 'user'" class="flex justify-end">
-                <div class="bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl px-4 py-3 max-w-xs shadow-md">
-                  <p class="text-sm text-white font-medium">{{ msg.content }}</p>
+    <Teleport to="body">
+      <div
+        v-if="chatModalOpen"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
+        @click.self="chatModalOpen = false"
+      >
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
+              <div class="flex items-center space-x-3">
+                <div v-if="selectedAgent" :class="[
+                  'w-14 h-14 rounded-xl flex items-center justify-center shadow-lg',
+                  selectedAgent.color
+                ]">
+                  <Icon :name="selectedAgent.icon" class="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold text-navy-900">{{ selectedAgent?.name }}</h3>
+                  <p class="text-sm text-gray-600">{{ selectedAgent?.badge?.text }} Specialist</p>
                 </div>
               </div>
-              
-              <!-- Agent Message -->
-              <div v-if="msg.type === 'agent'" class="flex justify-start">
-                <div class="bg-white rounded-xl px-4 py-3 max-w-md shadow-md border border-gray-200">
-                  <p class="text-sm text-navy-900 font-medium whitespace-pre-wrap">{{ msg.content }}</p>
+              <button
+                @click="chatModalOpen = false"
+                class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <Icon name="i-lucide-x" class="w-6 h-6 text-gray-500" />
+              </button>
+            </div>
+
+            <!-- Chat Interface -->
+            <div ref="chatContainer" class="bg-gray-50 rounded-xl p-4 h-96 overflow-y-auto mb-4 border border-gray-200">
+              <div class="space-y-4">
+                <div class="flex justify-start">
+                  <div class="bg-white rounded-xl px-4 py-3 max-w-xs shadow-md border border-gray-200">
+                    <p class="text-sm text-navy-900 font-medium">Hello! I'm {{ selectedAgent?.name }}. How can I assist you today?</p>
+                  </div>
+                </div>
+                
+                <!-- Chat Messages -->
+                <template v-for="(msg, index) in chatMessages" :key="index">
+                  <!-- User Message -->
+                  <div v-if="msg.type === 'user'" class="flex justify-end">
+                    <div class="bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl px-4 py-3 max-w-xs shadow-md">
+                      <p class="text-sm text-white font-medium">{{ msg.content }}</p>
+                    </div>
+                  </div>
                   
-                  <!-- Sources -->
-                  <div v-if="msg.sources && msg.sources.length > 0" class="mt-3 pt-3 border-t border-gray-200">
-                    <p class="text-xs font-bold text-gray-600 mb-2">Sources:</p>
-                    <div class="space-y-1">
-                      <a
-                        v-for="(source, idx) in msg.sources"
-                        :key="idx"
-                        :href="source.url"
-                        target="_blank"
-                        class="block text-xs text-amber-600 hover:text-amber-700 hover:underline"
-                      >
-                        {{ source.title }}
-                      </a>
+                  <!-- Agent Message -->
+                  <div v-if="msg.type === 'agent'" class="flex justify-start">
+                    <div class="bg-white rounded-xl px-4 py-3 max-w-md shadow-md border border-gray-200">
+                      <p class="text-sm text-navy-900 font-medium whitespace-pre-wrap">{{ msg.content }}</p>
+                      
+                      <!-- Sources -->
+                      <div v-if="msg.sources && msg.sources.length > 0" class="mt-3 pt-3 border-t border-gray-200">
+                        <p class="text-xs font-bold text-gray-600 mb-2">Sources:</p>
+                        <div class="space-y-1">
+                          <a
+                            v-for="(source, idx) in msg.sources"
+                            :key="idx"
+                            :href="source.url"
+                            target="_blank"
+                            class="block text-xs text-amber-600 hover:text-amber-700 hover:underline"
+                          >
+                            {{ source.title }}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+                
+                <!-- Loading Indicator -->
+                <div v-if="isLoading" class="flex justify-start">
+                  <div class="bg-white rounded-xl px-4 py-3 shadow-md border border-gray-200">
+                    <div class="flex items-center space-x-2">
+                      <div class="w-2 h-2 bg-amber-500 rounded-full animate-bounce"></div>
+                      <div class="w-2 h-2 bg-amber-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                      <div class="w-2 h-2 bg-amber-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
                     </div>
                   </div>
                 </div>
               </div>
-            </template>
-            
-            <!-- Loading Indicator -->
-            <div v-if="isLoading" class="flex justify-start">
-              <div class="bg-white rounded-xl px-4 py-3 shadow-md border border-gray-200">
-                <div class="flex items-center space-x-2">
-                  <div class="w-2 h-2 bg-amber-500 rounded-full animate-bounce"></div>
-                  <div class="w-2 h-2 bg-amber-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
-                  <div class="w-2 h-2 bg-amber-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
-                </div>
-              </div>
+            </div>
+
+            <div class="flex space-x-3">
+              <input
+                v-model="chatMessage"
+                placeholder="Type your message..."
+                class="flex-1 px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                @keyup.enter="sendMessage"
+              />
+              <button
+                @click="sendMessage"
+                class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg"
+              >
+                <Icon name="i-lucide-send" class="w-5 h-5" />
+              </button>
             </div>
           </div>
         </div>
-
-        <div class="flex space-x-3">
-          <input
-            v-model="chatMessage"
-            placeholder="Type your message..."
-            class="flex-1 px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-            @keyup.enter="sendMessage"
-          />
-          <button
-            @click="sendMessage"
-            class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg"
-          >
-            <Icon name="i-lucide-send" class="w-5 h-5" />
-          </button>
-        </div>
       </div>
-    </UModal>
+    </Teleport>
   </div>
 </template>
 
