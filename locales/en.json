@@ -1,0 +1,13 @@
+{
+  "sidebar": {
+    "dashboard": "Market Pulse",
+    "agents": "Agent Store",
+    "about": "About Shanbe",
+    "contact": "Contact Bridge"
+  },
+  "general": {
+    "search_placeholder": "Find an expert...",
+    "connect": "Connect",
+    "language": "Language"
+  }
+}

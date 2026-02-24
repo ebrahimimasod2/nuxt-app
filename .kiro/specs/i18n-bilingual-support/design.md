@@ -289,9 +289,88 @@ useHead({
 </script>
 ```
 
-### 6. RTL Styling System
+### 6. Chatbot Language Selection Component
 
-**Purpose**: Ensure proper layout and text alignment for RTL languages.
+**Purpose**: Allow users to select the output language for chatbot responses independently from the global application locale.
+
+**Component Interface**:
+```vue
+<template>
+  <div class="chatbot-language-selector">
+    <label>{{ $t('chatbot.language_label') }}</label>
+    <select v-model="chatbotLanguage" @change="onLanguageChange">
+      <option value="English">{{ $t('chatbot.language_english') }}</option>
+      <option value="Persian">{{ $t('chatbot.language_persian') }}</option>
+    </select>
+  </div>
+</template>
+
+<script setup>
+const { locale } = useI18n()
+const chatbotLanguage = ref('English')
+
+// Initialize from localStorage or default to current locale
+onMounted(() => {
+  const stored = localStorage.getItem('chatbot_language')
+  if (stored) {
+    chatbotLanguage.value = stored
+  } else {
+    chatbotLanguage.value = locale.value === 'fa' ? 'Persian' : 'English'
+  }
+})
+
+const onLanguageChange = () => {
+  localStorage.setItem('chatbot_language', chatbotLanguage.value)
+  // Show notification that language has changed
+  showNotification($t('chatbot.language_changed'))
+}
+</script>
+```
+
+**Integration with ShanbeAgent Component**:
+
+The ShanbeAgent.vue component needs to be updated to:
+
+1. **Include the language selector** in the chatbot UI (typically in the header or settings area)
+2. **Modify the sendMessage function** to include the language parameter:
+
+```typescript
+const sendMessage = async (message: string) => {
+  const chatbotLanguage = localStorage.getItem('chatbot_language') || 
+    (locale.value === 'fa' ? 'Persian' : 'English')
+  
+  const payload = {
+    question: message,
+    language: chatbotLanguage
+  }
+  
+  try {
+    const response = await $fetch('/api/chatbot', {
+      method: 'POST',
+      body: payload
+    })
+    // Handle response
+  } catch (error) {
+    // Handle error
+  }
+}
+```
+
+3. **Update the initial greeting** to use the selected language:
+
+```typescript
+const loadInitialGreeting = async () => {
+  const chatbotLanguage = localStorage.getItem('chatbot_language') || 
+    (locale.value === 'fa' ? 'Persian' : 'English')
+  
+  const greeting = await fetchGreeting(chatbotLanguage)
+  messages.value.push(greeting)
+}
+```
+
+**API Request Format**:
+
+All chatbot API re
 
 **CSS Strategy**:
 ```css
@@ -326,6 +405,153 @@ Nuxt UI and Tailwind CSS automatically handle RTL transformations for:
 - Text alignment
 - Flex direction
 - Border radius
+
+### 7. Chatbot Language Selection Component
+
+**Purpose**: Allow users to select the output language for chatbot responses independently from the global application locale.
+
+**Component Interface**:
+```vue
+<template>
+  <div class="chatbot-language-selector">
+    <label>{{ $t('chatbot.language_label') }}</label>
+    <select v-model="chatbotLanguage" @change="onLanguageChange">
+      <option value="English">{{ $t('chatbot.language_english') }}</option>
+      <option value="Persian">{{ $t('chatbot.language_persian') }}</option>
+    </select>
+  </div>
+</template>
+
+<script setup>
+const { locale } = useI18n()
+const chatbotLanguage = ref('English')
+
+// Initialize from localStorage or default to current locale
+onMounted(() => {
+  const stored = localStorage.getItem('chatbot_language')
+  if (stored) {
+    chatbotLanguage.value = stored
+  } else {
+    chatbotLanguage.value = locale.value === 'fa' ? 'Persian' : 'English'
+  }
+})
+
+const onLanguageChange = () => {
+  localStorage.setItem('chatbot_language', chatbotLanguage.value)
+  // Show notification that language has changed
+  showNotification($t('chatbot.language_changed'))
+}
+</script>
+```
+
+**Integration with ShanbeAgent Component**:
+
+The ShanbeAgent.vue component needs to be updated to:
+
+1. **Include the language selector** in the chatbot UI (typically in the header or settings area)
+2. **Modify the sendMessage function** to include the language parameter:
+
+```typescript
+const sendMessage = async (message: string) => {
+  const chatbotLanguage = localStorage.getItem('chatbot_language') || 
+    (locale.value === 'fa' ? 'Persian' : 'English')
+  
+  const payload = {
+    question: message,
+    language: chatbotLanguage
+  }
+  
+  try {
+    const response = await $fetch('/api/chatbot', {
+      method: 'POST',
+      body: payload
+    })
+    // Handle response
+  } catch (error) {
+    // Handle error
+  }
+}
+```
+
+3. **Update the initial greeting** to use the selected language:
+
+```typescript
+const loadInitialGreeting = async () => {
+  const chatbotLanguage = localStorage.getItem('chatbot_language') || 
+    (locale.value === 'fa' ? 'Persian' : 'English')
+  
+  const greeting = await fetchGreeting(chatbotLanguage)
+  messages.value.push(greeting)
+}
+```
+
+**API Request Format**:
+
+All chatbot API requests must follow this structure:
+
+```typescript
+interface ChatbotRequest {
+  question: string;      // The user's message/question
+  language: 'English' | 'Persian';  // The desired response language
+}
+```
+
+**Example API Requests**:
+```json
+{
+  "question": "What is the weather today?",
+  "language": "English"
+}
+```
+
+```json
+{
+  "question": "هوا امروز چطور است؟",
+  "language": "Persian"
+}
+```
+
+**Translation Keys Required**:
+
+Add to translation files:
+```json
+{
+  "chatbot": {
+    "language_label": "Chatbot Response Language",
+    "language_english": "English",
+    "language_persian": "Persian / فارسی",
+    "language_changed": "Chatbot language has been changed",
+    "placeholder": "Type your message...",
+    "send_button": "Send"
+  }
+}
+```
+
+Persian translations:
+```json
+{
+  "chatbot": {
+    "language_label": "زبان پاسخ چت‌بات",
+    "language_english": "English / انگلیسی",
+    "language_persian": "فارسی",
+    "language_changed": "زبان چت‌بات تغییر کرد",
+    "placeholder": "پیام خود را بنویسید...",
+    "send_button": "ارسال"
+  }
+}
+```
+
+**Key Design Decisions**:
+
+1. **Independence from Global Locale**: The chatbot language is stored separately from the application locale, allowing users to view the UI in one language while receiving chatbot responses in another.
+
+2. **Default Behavior**: The chatbot language defaults to match the current application locale on first use, providing a sensible starting point.
+
+3. **Persistence**: The selected language is stored in localStorage with the key `chatbot_language` to persist across sessions.
+
+4. **API Contract**: The language parameter uses full words ("English", "Persian") rather than locale codes ("en", "fa") to match the backend API expectations.
+
+5. **UI Translation**: All chatbot UI elements (labels, placeholders, buttons) are translated using the global application locale via $t(), while only the chatbot responses use the separately selected language.
 
 ## Data Models
 
@@ -450,6 +676,36 @@ The locale preference is stored in localStorage with the key `i18n_redirected` (
 *For any* route path used in a NuxtLink component, the generated href should include the appropriate locale prefix based on the current active locale.
 
 **Validates: Requirements 8.6**
+
+### Property 12: Chatbot Language Persistence
+
+*For any* chatbot language selection by the user, the system should store the selected language in browser localStorage with the key 'chatbot_language'.
+
+**Validates: Requirements 9.7**
+
+### Property 13: Chatbot Language Restoration Round-Trip
+
+*For any* chatbot language preference stored in localStorage, when the chatbot component is mounted or reloaded, the system should restore and activate that stored language.
+
+**Validates: Requirements 9.7**
+
+### Property 14: Chatbot API Request Format
+
+*For any* message sent to the chatbot, the API request payload should include both a 'question' field containing the message and a 'language' field containing either 'English' or 'Persian'.
+
+**Validates: Requirements 9.3, 9.4**
+
+### Property 15: Chatbot Language Default Behavior
+
+*For any* initial chatbot load when no stored preference exists, the chatbot language should default to 'Persian' when the application locale is 'fa', and 'English' otherwise.
+
+**Validates: Requirements 9.5**
+
+### Property 16: Chatbot Language Independence
+
+*For any* combination of application locale and chatbot language settings, changing the application locale should not automatically change the chatbot language, and vice versa.
+
+**Validates: Requirements 9.6**
 
 ## Error Handling
 

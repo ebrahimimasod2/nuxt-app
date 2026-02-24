@@ -170,26 +170,98 @@ This implementation plan breaks down the bilingual i18n support feature into dis
     - Test text alignment changes based on dir attribute
     - _Requirements: 4.4_
 
-- [ ] 12. Final integration and testing
-  - [ ] 12.1 Test all pages with both locales
+- [ ] 12. Implement chatbot language selection
+  - [ ] 12.1 Add chatbot translation keys to translation files
+    - Add 'chatbot' namespace to en.json with keys: language_label, language_english, language_persian, language_changed, placeholder, send_button
+    - Add 'chatbot' namespace to fa.json with Persian translations
+    - _Requirements: 9.10_
+
+  - [ ] 12.2 Create or update ShanbeAgent component with language selector
+    - Add language selector dropdown/toggle to chatbot UI
+    - Implement chatbotLanguage reactive state
+    - Initialize chatbot language from localStorage or default to current locale
+    - Add onLanguageChange handler to persist selection
+    - Display notification when language changes
+    - _Requirements: 9.1, 9.2, 9.5, 9.7, 9.9_
+
+  - [ ] 12.3 Update sendMessage function to include language parameter
+    - Modify sendMessage to read chatbot language from localStorage
+    - Update API request payload to include language field
+    - Ensure payload format matches: `{"question": "string", "language": "English"}` or `{"question": "string", "language": "Persian"}`
+    - _Requirements: 9.3, 9.4_
+
+  - [ ] 12.4 Update initial greeting to use selected chatbot language
+    - Modify loadInitialGreeting or equivalent function
+    - Fetch greeting based on stored chatbot language
+    - _Requirements: 9.8_
+
+  - [ ] 12.5 Translate chatbot UI elements using global locale
+    - Replace hardcoded text with $t() calls for placeholder, buttons, labels
+    - Ensure UI elements use global application locale, not chatbot language
+    - _Requirements: 9.10_
+
+  - [ ]* 12.6 Write property test for chatbot language persistence
+    - **Property 12: Chatbot Language Persistence**
+    - **Validates: Requirements 9.7**
+
+  - [ ]* 12.7 Write property test for chatbot language restoration
+    - **Property 13: Chatbot Language Restoration Round-Trip**
+    - **Validates: Requirements 9.7**
+
+  - [ ]* 12.8 Write property test for chatbot API request format
+    - **Property 14: Chatbot API Request Format**
+    - **Validates: Requirements 9.3, 9.4**
+
+  - [ ]* 12.9 Write property test for chatbot language default behavior
+    - **Property 15: Chatbot Language Default Behavior**
+    - **Validates: Requirements 9.5**
+
+  - [ ]* 12.10 Write property test for chatbot language independence
+    - **Property 16: Chatbot Language Independence**
+    - **Validates: Requirements 9.6**
+
+  - [ ]* 12.11 Write unit tests for chatbot language selector
+    - Test selector displays correct options
+    - Test language change updates localStorage
+    - Test notification is shown on language change
+    - Test default language matches application locale
+    - _Requirements: 9.1, 9.2, 9.5, 9.7, 9.9_
+
+- [ ] 13. Checkpoint - Test chatbot language selection
+  - Test chatbot language selector in both English and Persian UI
+  - Verify API requests include correct language parameter
+  - Test language persistence across page reloads
+  - Verify independence from global locale changes
+  - Ensure all tests pass
+  - Ask the user if questions arise
+
+- [ ] 14. Final integration and testing
+  - [ ] 14.1 Test all pages with both locales
     - Navigate to all pages (/, /agents, /about, /contact)
     - Verify translations work on all pages
     - Verify RTL layout works correctly
     - Test language switching on each page
     - _Requirements: All_
 
-  - [ ] 12.2 Test URL navigation and persistence
+  - [ ] 14.2 Test URL navigation and persistence
     - Test direct navigation to /fa/agents
     - Test locale persistence after page reload
     - Test query parameters are preserved
     - _Requirements: 7.2, 8.3, 8.4_
 
-  - [ ]* 12.3 Write integration tests for complete user flows
+  - [ ] 14.3 Test chatbot language selection end-to-end
+    - Test chatbot with all combinations of UI locale and chatbot language
+    - Verify API requests contain correct language parameter
+    - Test persistence across sessions
+    - _Requirements: 9.3, 9.4, 9.6, 9.7_
+
+  - [ ]* 14.4 Write integration tests for complete user flows
     - Test: Load app → Switch language → Navigate → Reload → Verify locale
     - Test: Direct navigation to localized URL → Verify locale activated
-    - _Requirements: 7.2, 8.3_
+    - Test: Change chatbot language → Send message → Verify API payload
+    - _Requirements: 7.2, 8.3, 9.3, 9.7_
 
-- [ ] 13. Final checkpoint - Ensure all tests pass
+- [ ] 15. Final checkpoint - Ensure all tests pass
   - Run all unit tests and property-based tests
   - Verify no console errors or warnings
   - Ensure all requirements are met

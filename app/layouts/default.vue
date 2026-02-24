@@ -30,6 +30,11 @@
         </NuxtLink>
       </div>
 
+      <!-- Language Switcher in Sidebar Header -->
+      <div class="px-6 py-3 border-b border-gray-200 bg-gray-50">
+        <LanguageSwitcher />
+      </div>
+
       <!-- Navigation -->
       <nav class="flex-1 p-4 space-y-1">
         <NuxtLink
@@ -74,29 +79,49 @@
 <script setup>
 const route = useRoute()
 const sidebarOpen = ref(false)
+const { locale, locales } = useI18n()
+const { t } = useI18n()
 
-const menuItems = [
+const localeProperties = computed(() => 
+  locales.value.find(l => l.code === locale.value)
+)
+
+useHead({
+  htmlAttrs: {
+    lang: locale.value,
+    dir: localeProperties.value?.dir || 'ltr'
+  },
+  link: [
+    {
+      rel: 'stylesheet',
+      href: 'https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css',
+      media: locale.value === 'fa' ? 'all' : 'not all'
+    }
+  ]
+})
+
+const menuItems = computed(() => [
   {
-    label: 'Market Pulse',
+    label: t('sidebar.dashboard'),
     icon: 'i-lucide-bar-chart-3',
     path: '/'
   },
   {
-    label: 'Agent Store',
+    label: t('sidebar.agents'),
     icon: 'i-lucide-bot',
     path: '/agents'
   },
   {
-    label: 'About Shanbe',
+    label: t('sidebar.about'),
     icon: 'i-lucide-building-2',
     path: '/about'
   },
   {
-    label: 'Contact Bridge',
+    label: t('sidebar.contact'),
     icon: 'i-lucide-phone',
     path: '/contact'
   }
-]
+])
 
 const isActive = (path) => {
   if (path === '/') {

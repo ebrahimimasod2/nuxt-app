@@ -135,3 +135,37 @@ This document specifies the requirements for implementing bilingual support (Eng
 4. THE System SHALL preserve query parameters and hash fragments when switching locales
 5. WHEN a user switches locales, THE System SHALL navigate to the equivalent page in the new locale
 6. THE System SHALL generate correct localized links for all NuxtLink components
+
+### Requirement 9: Chatbot Language Selection
+
+**User Story:** As a user chatting with the Shanbe Intelligence Agent chatbot, I want to choose the output language for chatbot responses, so that I can receive answers in my preferred language (English or Persian).
+
+#### Acceptance Criteria
+
+1. THE ShanbeAgent component SHALL add a language selector dropdown or toggle for chatbot responses
+2. THE language selector SHALL offer two options: "English" and "Persian" (or "فارسی")
+3. WHEN a user sends a message to the chatbot, THE System SHALL include the selected language in the API request
+4. THE API request payload SHALL follow this format: `{"question": "string", "language": "English"}` or `{"question": "string", "language": "Persian"}`
+5. THE language selector SHALL default to the current application locale (if user is on /fa, default to Persian; otherwise English)
+6. THE language selector SHALL be independent of the global application language (user can view UI in English but get chatbot responses in Persian, or vice versa)
+7. THE selected chatbot language SHALL persist in browser storage for the user's session
+8. THE chatbot's initial greeting message SHALL be displayed in the selected chatbot language
+9. WHEN the user changes the chatbot language, THE System SHALL display a confirmation message indicating the language has been changed
+10. THE System SHALL translate all chatbot UI elements (placeholder text, button labels, etc.) according to the global application locale
+
+### Requirement 9: Chatbot Language Selection
+
+**User Story:** As a user chatting with the Shanbe Intelligence Agent chatbot, I want to choose the output language for chatbot responses, so that I can receive answers in my preferred language (English or Persian).
+
+#### Acceptance Criteria
+
+1. THE ShanbeAgent component SHALL add a language selector dropdown/toggle for chatbot responses
+2. THE language selector SHALL offer two options: "English" and "Persian" (or "فارسی")
+3. WHEN a user sends a message to the chatbot, THE System SHALL include the selected language in the API request
+4. THE API request payload SHALL follow this format: `{"question": "string", "language": "English"}` or `{"question": "string", "language": "Persian"}`
+5. THE language selector SHALL default to the current application locale (if user is on /fa, default to Persian; otherwise English)
+6. THE language selector SHALL be independent of the global application language (user can view UI in English but get chatbot responses in Persian, or vice versa)
+7. THE selected chatbot language SHALL persist in browser storage for the user's session
+8. THE chatbot's initial greeting message SHALL be displayed in the selected chatbot language
+9. WHEN the user changes the chatbot language, THE System SHALL display a message indicating the language has been changed
+10. THE System SHALL translate all chatbot UI elements (placeholder text, button labels, etc.) according to the global application locale

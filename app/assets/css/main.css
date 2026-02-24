@@ -110,3 +110,27 @@ button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
+
+/* RTL Support */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="ltr"] {
+  text-align: left;
+}
+
+/* Persian font application */
+[dir="rtl"] * {
+  font-family: 'Vazirmatn', sans-serif !important;
+}
+
+/* Preserve sidebar position in RTL */
+[dir="rtl"] aside {
+  left: 0 !important;
+}
+
+/* Flip flex directions for RTL */
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse;
+}

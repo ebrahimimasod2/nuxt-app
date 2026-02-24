@@ -1,0 +1,13 @@
+{
+  "sidebar": {
+    "dashboard": "نبض بازار",
+    "agents": "بازار هوشمند",
+    "about": "درباره شنبه",
+    "contact": "پل ارتباطی"
+  },
+  "general": {
+    "search_placeholder": "جستجوی متخصص...",
+    "connect": "اتصال",
+    "language": "زبان"
+  }
+}
