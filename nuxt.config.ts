@@ -21,9 +21,10 @@ export default defineNuxtConfig({
         file: 'fa.json'
       }
     ],
+    lazy: true,
     defaultLocale: 'en',
     strategy: 'prefix_except_default',
-    langDir: 'locales/',
+    langDir: 'locales',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
