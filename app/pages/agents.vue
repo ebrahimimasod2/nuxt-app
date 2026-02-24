@@ -2,8 +2,8 @@
   <div class="min-h-screen p-6 lg:p-10">
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-4xl font-bold text-navy-900 mb-2">Agent Store</h1>
-      <p class="text-gray-600 text-lg">Choose a specialized AI agent to assist with your research and analysis</p>
+      <h1 class="text-4xl font-bold text-navy-900 mb-2">{{ $t('agents.title') }}</h1>
+      <p class="text-gray-600 text-lg">{{ $t('agents.subtitle') }}</p>
     </div>
 
     <!-- Search Bar -->
@@ -13,7 +13,7 @@
         <input
           v-model="searchQuery"
           type="text"
-          placeholder="Find an expert..."
+          :placeholder="$t('general.search_placeholder')"
           class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-navy-900 placeholder-gray-400"
         />
       </div>
@@ -26,8 +26,8 @@
           <Icon name="i-lucide-sparkles" class="w-8 h-8 text-white" />
         </div>
         <div>
-          <h2 class="text-2xl font-bold text-navy-900">Premium AI Agents</h2>
-          <p class="text-gray-700">Powered by advanced intelligence for the Iranian startup ecosystem</p>
+          <h2 class="text-2xl font-bold text-navy-900">{{ $t('agents.premium_title') }}</h2>
+          <p class="text-gray-700">{{ $t('agents.premium_subtitle') }}</p>
         </div>
       </div>
     </div>
@@ -75,14 +75,14 @@
             </div>
             <div class="flex items-center space-x-1">
               <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span class="text-green-600 font-medium text-xs">Online</span>
+              <span class="text-green-600 font-medium text-xs">{{ $t('general.online') }}</span>
             </div>
           </div>
         </div>
 
         <!-- Agent Capabilities -->
         <div class="p-6 border-b border-gray-100 bg-gray-50">
-          <h4 class="text-sm font-bold text-navy-900 mb-3">Specializations</h4>
+          <h4 class="text-sm font-bold text-navy-900 mb-3">{{ $t('agents.specializations') }}</h4>
           <div class="flex flex-wrap gap-2">
             <span
               v-for="skill in agent.skills"
@@ -101,7 +101,7 @@
             class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
           >
             <Icon name="i-lucide-message-circle" class="w-5 h-5" />
-            <span>Try Agent</span>
+            <span>{{ $t('general.try_agent') }}</span>
           </button>
         </div>
       </div>
@@ -142,7 +142,7 @@
               <div class="space-y-4">
                 <div class="flex justify-start">
                   <div class="bg-white rounded-xl px-4 py-3 max-w-xs shadow-md border border-gray-200">
-                    <p class="text-sm text-navy-900 font-medium">Hello! I'm {{ selectedAgent?.name }}. How can I assist you today?</p>
+                    <p class="text-sm text-navy-900 font-medium">{{ $t('agents.greeting', { name: selectedAgent?.name }) }}</p>
                   </div>
                 </div>
                 
@@ -162,7 +162,7 @@
                       
                       <!-- Sources -->
                       <div v-if="msg.sources && msg.sources.length > 0" class="mt-3 pt-3 border-t border-gray-200">
-                        <p class="text-xs font-bold text-gray-600 mb-2">Sources:</p>
+                        <p class="text-xs font-bold text-gray-600 mb-2">{{ $t('agents.sources') }}:</p>
                         <div class="space-y-1">
                           <a
                             v-for="(source, idx) in msg.sources"
@@ -195,7 +195,7 @@
             <div class="flex space-x-3">
               <input
                 v-model="chatMessage"
-                placeholder="Type your message..."
+                :placeholder="$t('agents.chat_placeholder')"
                 class="flex-1 px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 @keyup.enter="sendMessage"
               />

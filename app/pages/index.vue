@@ -2,8 +2,8 @@
   <div class="min-h-screen p-6 lg:p-10">
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-4xl font-bold text-navy-900 mb-2">Market Pulse</h1>
-      <p class="text-gray-600 text-lg">Real-time news and insights from Iran's startup ecosystem</p>
+      <h1 class="text-4xl font-bold text-navy-900 mb-2">{{ $t('home.title') }}</h1>
+      <p class="text-gray-600 text-lg">{{ $t('home.subtitle') }}</p>
     </div>
 
     <!-- Stats Bar -->
@@ -11,7 +11,7 @@
       <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-gray-500 text-sm mb-1 font-medium">Total Articles</p>
+            <p class="text-gray-500 text-sm mb-1 font-medium">{{ $t('home.total_articles') }}</p>
             <p class="text-4xl font-bold text-navy-900">{{ newsArticles.length }}</p>
           </div>
           <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -23,8 +23,8 @@
       <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-gray-500 text-sm mb-1 font-medium">Last Updated</p>
-            <p class="text-2xl font-bold text-navy-900">2 hours ago</p>
+            <p class="text-gray-500 text-sm mb-1 font-medium">{{ $t('home.last_updated') }}</p>
+            <p class="text-2xl font-bold text-navy-900">2 {{ $t('home.hours_ago') }}</p>
           </div>
           <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
             <Icon name="i-lucide-clock" class="w-7 h-7 text-white" />
@@ -35,7 +35,7 @@
       <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-gray-500 text-sm mb-1 font-medium">Active Sources</p>
+            <p class="text-gray-500 text-sm mb-1 font-medium">{{ $t('home.active_sources') }}</p>
             <p class="text-4xl font-bold text-navy-900">12</p>
           </div>
           <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
