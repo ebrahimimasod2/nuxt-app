@@ -132,11 +132,55 @@
         </div>
 
         <!-- Chat Interface -->
-        <div class="bg-gray-50 rounded-xl p-4 h-96 overflow-y-auto mb-4 border border-gray-200">
+        <div ref="chatContainer" class="bg-gray-50 rounded-xl p-4 h-96 overflow-y-auto mb-4 border border-gray-200">
           <div class="space-y-4">
             <div class="flex justify-start">
               <div class="bg-white rounded-xl px-4 py-3 max-w-xs shadow-md border border-gray-200">
                 <p class="text-sm text-navy-900 font-medium">Hello! I'm {{ selectedAgent?.name }}. How can I assist you today?</p>
+              </div>
+            </div>
+            
+            <!-- Chat Messages -->
+            <template v-for="(msg, index) in chatMessages" :key="index">
+              <!-- User Message -->
+              <div v-if="msg.type === 'user'" class="flex justify-end">
+                <div class="bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl px-4 py-3 max-w-xs shadow-md">
+                  <p class="text-sm text-white font-medium">{{ msg.content }}</p>
+                </div>
+              </div>
+              
+              <!-- Agent Message -->
+              <div v-if="msg.type === 'agent'" class="flex justify-start">
+                <div class="bg-white rounded-xl px-4 py-3 max-w-md shadow-md border border-gray-200">
+                  <p class="text-sm text-navy-900 font-medium whitespace-pre-wrap">{{ msg.content }}</p>
+                  
+                  <!-- Sources -->
+                  <div v-if="msg.sources && msg.sources.length > 0" class="mt-3 pt-3 border-t border-gray-200">
+                    <p class="text-xs font-bold text-gray-600 mb-2">Sources:</p>
+                    <div class="space-y-1">
+                      <a
+                        v-for="(source, idx) in msg.sources"
+                        :key="idx"
+                        :href="source.url"
+                        target="_blank"
+                        class="block text-xs text-amber-600 hover:text-amber-700 hover:underline"
+                      >
+                        {{ source.title }}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
+            
+            <!-- Loading Indicator -->
+            <div v-if="isLoading" class="flex justify-start">
+              <div class="bg-white rounded-xl px-4 py-3 shadow-md border border-gray-200">
+                <div class="flex items-center space-x-2">
+                  <div class="w-2 h-2 bg-amber-500 rounded-full animate-bounce"></div>
+                  <div class="w-2 h-2 bg-amber-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                  <div class="w-2 h-2 bg-amber-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -170,6 +214,12 @@ const chatModalOpen = ref(false)
 const selectedAgent = ref(null)
 const chatMessage = ref('')
 const searchQuery = ref('')
+const chatMessages = ref([])
+const isLoading = ref(false)
+const chatContainer = ref(null)
+
+const API_BASE_URL = 'https://rag.prolinkd.ai'
+const API_TOKEN = '7e552031-ff19-4950-83ae-2d2e9c699b55'
 
 const agents = ref([
   {
@@ -254,12 +304,72 @@ const filteredAgents = computed(() => {
 
 const connectAgent = (agent) => {
   selectedAgent.value = agent
+  chatMessages.value = []
   chatModalOpen.value = true
 }
 
-const sendMessage = () => {
-  if (!chatMessage.value.trim()) return
-  console.log('Sending message:', chatMessage.value)
+const scrollToBottom = () => {
+  nextTick(() => {
+    if (chatContainer.value) {
+      chatContainer.value.scrollTop = chatContainer.value.scrollHeight
+    }
+  })
+}
+
+const sendMessage = async () => {
+  if (!chatMessage.value.trim() || isLoading.value) return
+  
+  const userMessage = chatMessage.value.trim()
   chatMessage.value = ''
+  
+  // Add user message to chat
+  chatMessages.value.push({
+    type: 'user',
+    content: userMessage
+  })
+  
+  scrollToBottom()
+  isLoading.value = true
+  
+  try {
+    const response = await fetch(`${API_BASE_URL}/v1/chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_TOKEN}`
+      },
+      body: JSON.stringify({
+        question: userMessage
+      })
+    })
+    
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`)
+    }
+    
+    const data = await response.json()
+    
+    // Add agent response to chat
+    chatMessages.value.push({
+      type: 'agent',
+      content: data.answer,
+      sources: data.sources || []
+    })
+    
+    scrollToBottom()
+  } catch (error) {
+    console.error('Error sending message:', error)
+    
+    // Add error message
+    chatMessages.value.push({
+      type: 'agent',
+      content: 'Sorry, I encountered an error processing your request. Please try again.',
+      sources: []
+    })
+    
+    scrollToBottom()
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>
