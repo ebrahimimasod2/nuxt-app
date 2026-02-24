@@ -14,6 +14,8 @@
 
 <script setup>
 const { locale, setLocale, locales } = useI18n()
+const router = useRouter()
+const route = useRoute()
 
 const currentLocale = computed(() => locale.value)
 
@@ -30,9 +32,12 @@ const alternateLocale = computed(() =>
   locale.value === 'en' ? 'fa' : 'en'
 )
 
-const toggleLocale = () => {
+const toggleLocale = async () => {
   const newLocale = alternateLocale.value
-  setLocale(newLocale)
+  await setLocale(newLocale)
+  
+  // Force page reload to update all content
+  window.location.reload()
 }
 </script>
 

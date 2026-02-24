@@ -3,8 +3,8 @@
     <div class="max-w-5xl mx-auto">
       <!-- Header -->
       <div class="text-center mb-12">
-        <h1 class="text-5xl font-bold text-navy-900 mb-4">Contact Bridge</h1>
-        <p class="text-xl text-gray-600">Connect with us to explore opportunities in Iran's startup ecosystem</p>
+        <h1 class="text-5xl font-bold text-navy-900 mb-4">{{ $t('contact.title') }}</h1>
+        <p class="text-xl text-gray-600">{{ $t('contact.subtitle') }}</p>
       </div>
 
       <div class="grid lg:grid-cols-2 gap-8">
@@ -14,93 +14,93 @@
             <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
               <Icon name="i-lucide-send" class="w-6 h-6 text-white" />
             </div>
-            <h2 class="text-2xl font-bold text-navy-900">Request Access</h2>
+            <h2 class="text-2xl font-bold text-navy-900">{{ $t('contact.form_title') }}</h2>
           </div>
 
           <form @submit.prevent="handleSubmit" class="space-y-6">
             <!-- Name -->
             <div>
-              <label class="block text-sm font-bold text-navy-900 mb-2">Full Name *</label>
+              <label class="block text-sm font-bold text-navy-900 mb-2">{{ $t('contact.full_name') }} *</label>
               <input
                 v-model="form.name"
                 type="text"
                 required
-                placeholder="John Doe"
+                :placeholder="$t('contact.full_name_placeholder')"
                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               />
             </div>
 
             <!-- Email -->
             <div>
-              <label class="block text-sm font-bold text-navy-900 mb-2">Email Address *</label>
+              <label class="block text-sm font-bold text-navy-900 mb-2">{{ $t('contact.email') }} *</label>
               <input
                 v-model="form.email"
                 type="email"
                 required
-                placeholder="john@company.com"
+                :placeholder="$t('contact.email_placeholder')"
                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               />
             </div>
 
             <!-- Organization -->
             <div>
-              <label class="block text-sm font-bold text-navy-900 mb-2">Organization *</label>
+              <label class="block text-sm font-bold text-navy-900 mb-2">{{ $t('contact.organization') }} *</label>
               <input
                 v-model="form.organization"
                 type="text"
                 required
-                placeholder="Your Company Name"
+                :placeholder="$t('contact.organization_placeholder')"
                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               />
             </div>
 
             <!-- Role -->
             <div>
-              <label class="block text-sm font-bold text-navy-900 mb-2">Your Role *</label>
+              <label class="block text-sm font-bold text-navy-900 mb-2">{{ $t('contact.your_role') }} *</label>
               <select
                 v-model="form.role"
                 required
                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               >
-                <option value="">Select your role</option>
-                <option value="investor">Investor / VC</option>
-                <option value="researcher">Researcher / Analyst</option>
-                <option value="entrepreneur">Entrepreneur / Founder</option>
-                <option value="corporate">Corporate / Strategic</option>
-                <option value="other">Other</option>
+                <option value="">{{ $t('general.select_role') }}</option>
+                <option value="investor">{{ $t('contact.role_investor') }}</option>
+                <option value="researcher">{{ $t('contact.role_researcher') }}</option>
+                <option value="entrepreneur">{{ $t('contact.role_entrepreneur') }}</option>
+                <option value="corporate">{{ $t('contact.role_corporate') }}</option>
+                <option value="other">{{ $t('contact.role_other') }}</option>
               </select>
             </div>
 
             <!-- Interest -->
             <div>
-              <label class="block text-sm font-bold text-navy-900 mb-2">Area of Interest</label>
+              <label class="block text-sm font-bold text-navy-900 mb-2">{{ $t('contact.area_interest') }}</label>
               <div class="space-y-2">
                 <label class="flex items-center space-x-2 cursor-pointer">
                   <input type="checkbox" v-model="form.interests" value="investment" class="w-4 h-4 text-amber-600 rounded focus:ring-amber-500" />
-                  <span class="text-gray-700">Investment Opportunities</span>
+                  <span class="text-gray-700">{{ $t('contact.interest_investment') }}</span>
                 </label>
                 <label class="flex items-center space-x-2 cursor-pointer">
                   <input type="checkbox" v-model="form.interests" value="research" class="w-4 h-4 text-amber-600 rounded focus:ring-amber-500" />
-                  <span class="text-gray-700">Market Research</span>
+                  <span class="text-gray-700">{{ $t('contact.interest_research') }}</span>
                 </label>
                 <label class="flex items-center space-x-2 cursor-pointer">
                   <input type="checkbox" v-model="form.interests" value="partnership" class="w-4 h-4 text-amber-600 rounded focus:ring-amber-500" />
-                  <span class="text-gray-700">Strategic Partnerships</span>
+                  <span class="text-gray-700">{{ $t('contact.interest_partnership') }}</span>
                 </label>
                 <label class="flex items-center space-x-2 cursor-pointer">
                   <input type="checkbox" v-model="form.interests" value="data" class="w-4 h-4 text-amber-600 rounded focus:ring-amber-500" />
-                  <span class="text-gray-700">Data & Analytics</span>
+                  <span class="text-gray-700">{{ $t('contact.interest_data') }}</span>
                 </label>
               </div>
             </div>
 
             <!-- Message -->
             <div>
-              <label class="block text-sm font-bold text-navy-900 mb-2">Message</label>
+              <label class="block text-sm font-bold text-navy-900 mb-2">{{ $t('contact.message') }}</label>
               <textarea
                 v-model="form.message"
                 rows="4"
-                placeholder="Tell us about your interests and how we can help..."
+                :placeholder="$t('contact.message_placeholder')"
                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
               ></textarea>
             </div>
@@ -111,8 +111,8 @@
               :disabled="isSubmitting"
               class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span v-if="!isSubmitting">Send Request</span>
-              <span v-else>Sending...</span>
+              <span v-if="!isSubmitting">{{ $t('contact.send_request') }}</span>
+              <span v-else>{{ $t('general.sending') }}</span>
             </button>
           </form>
 
@@ -120,7 +120,7 @@
           <div v-if="showSuccess" class="mt-6 bg-green-50 border border-green-200 rounded-xl p-4">
             <div class="flex items-center space-x-2">
               <Icon name="i-lucide-check-circle" class="w-5 h-5 text-green-600" />
-              <p class="text-green-700 font-medium">Thank you! We'll be in touch soon.</p>
+              <p class="text-green-700 font-medium">{{ $t('contact.success_message') }}</p>
             </div>
           </div>
         </div>
@@ -129,7 +129,7 @@
         <div class="space-y-6">
           <!-- Contact Information -->
           <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-            <h3 class="text-2xl font-bold text-navy-900 mb-6">Get in Touch</h3>
+            <h3 class="text-2xl font-bold text-navy-900 mb-6">{{ $t('contact.get_in_touch') }}</h3>
             
             <div class="space-y-4">
               <div class="flex items-start space-x-3">
@@ -137,8 +137,8 @@
                   <Icon name="i-lucide-mail" class="w-5 h-5 text-blue-600" />
                 </div>
                 <div>
-                  <p class="font-bold text-navy-900">Email</p>
-                  <p class="text-gray-600">contact@shanbeglobal.com</p>
+                  <p class="font-bold text-navy-900">{{ $t('contact.email_label') }}</p>
+                  <p class="text-gray-600">{{ $t('contact.email_value') }}</p>
                 </div>
               </div>
 
@@ -147,8 +147,8 @@
                   <Icon name="i-lucide-phone" class="w-5 h-5 text-green-600" />
                 </div>
                 <div>
-                  <p class="font-bold text-navy-900">Phone</p>
-                  <p class="text-gray-600">+1 (555) 123-4567</p>
+                  <p class="font-bold text-navy-900">{{ $t('contact.phone_label') }}</p>
+                  <p class="text-gray-600">{{ $t('contact.phone_value') }}</p>
                 </div>
               </div>
 
@@ -157,8 +157,8 @@
                   <Icon name="i-lucide-map-pin" class="w-5 h-5 text-purple-600" />
                 </div>
                 <div>
-                  <p class="font-bold text-navy-900">Location</p>
-                  <p class="text-gray-600">Global Operations</p>
+                  <p class="font-bold text-navy-900">{{ $t('contact.location_label') }}</p>
+                  <p class="text-gray-600">{{ $t('contact.location_value') }}</p>
                 </div>
               </div>
             </div>
@@ -166,23 +166,23 @@
 
           <!-- Quick Info -->
           <div class="bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl p-8 border border-amber-200">
-            <h3 class="text-xl font-bold text-navy-900 mb-4">Why Connect With Us?</h3>
+            <h3 class="text-xl font-bold text-navy-900 mb-4">{{ $t('contact.why_connect') }}</h3>
             <ul class="space-y-3">
               <li class="flex items-start space-x-2">
                 <Icon name="i-lucide-check" class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                <span class="text-gray-700">Access to verified startup data</span>
+                <span class="text-gray-700">{{ $t('contact.benefit_1') }}</span>
               </li>
               <li class="flex items-start space-x-2">
                 <Icon name="i-lucide-check" class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                <span class="text-gray-700">AI-powered market insights</span>
+                <span class="text-gray-700">{{ $t('contact.benefit_2') }}</span>
               </li>
               <li class="flex items-start space-x-2">
                 <Icon name="i-lucide-check" class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                <span class="text-gray-700">Direct connections to founders</span>
+                <span class="text-gray-700">{{ $t('contact.benefit_3') }}</span>
               </li>
               <li class="flex items-start space-x-2">
                 <Icon name="i-lucide-check" class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                <span class="text-gray-700">Custom research reports</span>
+                <span class="text-gray-700">{{ $t('contact.benefit_4') }}</span>
               </li>
             </ul>
           </div>
@@ -194,8 +194,8 @@
                 <Icon name="i-lucide-clock" class="w-6 h-6 text-white" />
               </div>
               <div>
-                <p class="font-bold text-navy-900">Quick Response</p>
-                <p class="text-sm text-gray-600">We typically respond within 24 hours</p>
+                <p class="font-bold text-navy-900">{{ $t('contact.quick_response') }}</p>
+                <p class="text-sm text-gray-600">{{ $t('contact.response_time') }}</p>
               </div>
             </div>
           </div>

@@ -91,7 +91,7 @@
         <!-- Read More Footer -->
         <div class="px-6 py-3 bg-gray-50 border-t border-gray-100 group-hover:bg-amber-50 transition-colors">
           <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-600 group-hover:text-amber-600 font-medium">Read full article</span>
+            <span class="text-sm text-gray-600 group-hover:text-amber-600 font-medium">{{ $t('home.read_full_article') }}</span>
             <Icon name="i-lucide-arrow-right" class="w-4 h-4 text-gray-400 group-hover:text-amber-600 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
