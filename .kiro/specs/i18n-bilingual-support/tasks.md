@@ -51,8 +51,9 @@ This implementation plan breaks down the bilingual i18n support feature into dis
     - Create component file in app/components/
     - Use useI18n composable to access locale state
     - Implement toggle function to switch between en and fa
-    - Display current and alternate locale codes (e.g., "EN / FA")
-    - Style component to match application design system
+    - Add flag icons: 🇬🇧 for English, 🇮🇷 for Persian/Iran
+    - Display current flag and locale code (e.g., "🇬🇧 EN")
+    - Style component to match application design system and header context
     - _Requirements: 3.1, 3.2, 3.3_
 
   - [ ]* 4.2 Write property test for locale toggle
@@ -61,6 +62,7 @@ This implementation plan breaks down the bilingual i18n support feature into dis
 
   - [ ]* 4.3 Write unit tests for LanguageSwitcher component
     - Test component renders with correct locale display
+    - Test correct flag icon is displayed for each locale
     - Test click handler calls setLocale with alternate locale
     - _Requirements: 3.2, 3.3_
 
@@ -92,10 +94,11 @@ This implementation plan breaks down the bilingual i18n support feature into dis
     - Add useHead to set htmlAttrs dynamically (if not already in app.vue)
     - _Requirements: 6.1, 6.2, 6.3, 6.5_
 
-  - [ ] 6.2 Integrate LanguageSwitcher component into sidebar
+  - [ ] 6.2 Integrate LanguageSwitcher component into header
     - Import LanguageSwitcher component
-    - Add component to sidebar footer section (below the "Trusted by" info)
-    - Ensure proper spacing and styling
+    - Add component to header/navigation area for easy visibility
+    - Ensure proper spacing and styling in header context
+    - Position for optimal user accessibility
     - _Requirements: 3.5_
 
   - [ ]* 6.3 Write unit tests for layout translations

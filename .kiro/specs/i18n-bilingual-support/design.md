@@ -158,7 +158,8 @@ interface TranslationFile {
 ```vue
 <template>
   <button @click="toggleLocale" class="language-switcher">
-    {{ currentLocale.toUpperCase() }} / {{ alternateLocale.toUpperCase() }}
+    <span class="flag">{{ currentFlag }}</span>
+    <span class="locale-code">{{ currentLocale.toUpperCase() }}</span>
   </button>
 </template>
 
@@ -170,6 +171,10 @@ const alternateLocale = computed(() =>
   locale.value === 'en' ? 'fa' : 'en'
 )
 
+const currentFlag = computed(() => 
+  locale.value === 'en' ? '🇬🇧' : '🇮🇷'
+)
+
 const toggleLocale = () => {
   const newLocale = alternateLocale.value
   setLocale(newLocale)
@@ -178,14 +183,15 @@ const toggleLocale = () => {
 ```
 
 **Styling Requirements**:
-- Clean, minimal button design
-- Positioned at the bottom of the sidebar
+- Clean, minimal button design with flag icon
+- Positioned in the header/navigation area for easy visibility
+- Flag icons: 🇬🇧 for English, 🇮🇷 for Persian/Iran
 - Consistent with the application's design system
-- Clear visual indication of current locale
+- Clear visual indication of current locale with flag and text
 
 ### 4. Layout Updates (layouts/default.vue)
 
-**Purpose**: Integrate i18n functionality into the main layout and replace hardcoded text.
+**Purpose**: Integrate i18n functionality into the main layout, replace hardcoded text, and integrate the LanguageSwitcher into the header.
 
 **Key Changes**:
 
@@ -241,6 +247,18 @@ const menuItems = [
   </NuxtLink>
 </template>
 ```
+
+4. **Header Integration**:
+```vue
+<template>
+  <header class="header">
+    <!-- Other header content -->
+    <LanguageSwitcher />
+  </header>
+</template>
+```
+
+The LanguageSwitcher component should be positioned in the header area where users can easily see and access it, providing immediate visibility for language selection.
 
 ### 5. App Root Updates (app.vue)
 
