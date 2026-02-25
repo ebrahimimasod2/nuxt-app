@@ -1,8 +1,6 @@
 # Shanbe Global Intelligence Portal - Design Guide
 
 
-
-
 ## 🎨 Visual Identity
 
 ### Brand Positioning
