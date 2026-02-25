@@ -5,7 +5,7 @@
       class="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
       :title="$t('general.language')"
     >
-      <span class="text-2xl">{{ currentFlag }}</span>
+      <Icon :name="currentFlag" class="w-6 h-6 text-white" />
       <span class="text-sm font-bold text-white">{{ currentLocaleName }}</span>
       <Icon name="i-lucide-chevron-down" class="w-4 h-4 text-white" />
     </button>
@@ -25,7 +25,7 @@ const currentLocaleName = computed(() => {
 })
 
 const currentFlag = computed(() => 
-  locale.value === 'en' ? '🇬🇧' : '🇮🇷'
+  locale.value === 'en' ? 'i-circle-flags-gb' : 'i-circle-flags-ir'
 )
 
 const alternateLocale = computed(() => 
@@ -35,8 +35,6 @@ const alternateLocale = computed(() =>
 const toggleLocale = async () => {
   const newLocale = alternateLocale.value
   await setLocale(newLocale)
-  
-  // Force page reload to update all content
   window.location.reload()
 }
 </script>

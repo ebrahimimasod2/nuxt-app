@@ -1,4 +1,10 @@
 <script setup>
+const { locale, locales } = useI18n()
+
+const currentLocaleInfo = computed(() => {
+  return locales.value.find(l => l.code === locale.value) || { dir: 'ltr', code: 'en' }
+})
+
 useHead({
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
@@ -7,7 +13,8 @@ useHead({
     { rel: 'icon', href: '/favicon.ico' }
   ],
   htmlAttrs: {
-    lang: 'en'
+    lang: () => locale.value,
+    dir: () => currentLocaleInfo.value.dir
   }
 })
 

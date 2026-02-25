@@ -11,21 +11,28 @@ export default defineNuxtConfig({
       {
         code: 'en',
         name: 'English',
-        dir: 'ltr'
+        dir: 'ltr',
+        file: 'en.json'
       },
       {
         code: 'fa',
         name: 'فارسی',
-        dir: 'rtl'
+        dir: 'rtl',
+        file: 'fa.json'
       }
     ],
+    lazy: true,
+    langDir: './locales',
     defaultLocale: 'en',
-    strategy: 'prefix_except_default',
+    strategy: 'no_prefix',
     vueI18n: './i18n.config.ts',
     detectBrowserLanguage: {
       useCookie: true,
-      cookieKey: 'i18n_redirected',
-      redirectOn: 'root'
+      cookieKey: 'i18n_locale',
+      cookieSecure: false,
+      cookieCrossOrigin: false,
+      redirectOn: 'root',
+      alwaysRedirect: false
     }
   },
   

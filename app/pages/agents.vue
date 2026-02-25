@@ -158,7 +158,7 @@
                   <!-- Agent Message -->
                   <div v-if="msg.type === 'agent'" class="flex justify-start">
                     <div class="bg-white rounded-xl px-4 py-3 max-w-md shadow-md border border-gray-200">
-                      <p class="text-sm text-navy-900 font-medium whitespace-pre-wrap">{{ msg.content }}</p>
+                      <div class="text-sm text-navy-900 markdown-content" v-html="msg.renderedContent"></div>
                       
                       <!-- Sources -->
                       <div v-if="msg.sources && msg.sources.length > 0" class="mt-3 pt-3 border-t border-gray-200">
@@ -218,6 +218,8 @@ definePageMeta({
   layout: 'default'
 })
 
+const { locale } = useI18n()
+const { renderMarkdown } = useMarkdown()
 const chatModalOpen = ref(false)
 const selectedAgent = ref(null)
 const chatMessage = ref('')
@@ -340,6 +342,8 @@ const sendMessage = async () => {
   isLoading.value = true
   
   try {
+    const language = locale.value === 'fa' ? 'Farsi' : 'English'
+    
     const response = await fetch(`${API_BASE_URL}/v1/chat`, {
       method: 'POST',
       headers: {
@@ -348,7 +352,8 @@ const sendMessage = async () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        question: userMessage
+        question: userMessage,
+        language: language
       })
     })
     
@@ -362,6 +367,7 @@ const sendMessage = async () => {
     chatMessages.value.push({
       type: 'agent',
       content: data.answer,
+      renderedContent: renderMarkdown(data.answer),
       sources: data.sources || []
     })
     
@@ -370,9 +376,11 @@ const sendMessage = async () => {
     console.error('Error sending message:', error)
     
     // Add error message
+    const errorMsg = 'Sorry, I encountered an error processing your request. Please try again.'
     chatMessages.value.push({
       type: 'agent',
-      content: 'Sorry, I encountered an error processing your request. Please try again.',
+      content: errorMsg,
+      renderedContent: errorMsg,
       sources: []
     })
     
