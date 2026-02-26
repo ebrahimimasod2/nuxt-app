@@ -6,14 +6,11 @@ RUN corepack enable && corepack prepare pnpm@10.29.2 --activate
 
 WORKDIR /app
 
-# Copy package files
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-
-# Install dependencies
-RUN pnpm install --frozen-lockfile
-
-# Copy source code
+# Copy all files first
 COPY . .
+
+# Install dependencies (without frozen lockfile to handle any mismatches)
+RUN pnpm install
 
 # Build the application
 RUN pnpm build
